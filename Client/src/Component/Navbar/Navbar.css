@@ -1,0 +1,50 @@
+.line {
+	width: 2px;
+	height: var(--size-600);
+}
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+	outline: none;
+	box-shadow: none;
+	border: none;
+}
+.iconSize {
+	width: var(--size-600);
+	height: var(--size-600);
+}
+.active {
+	color: #ecdd00 !important;
+}
+.highlight {
+	color: #ecdd00 !important;
+}
+.lineColor {
+	background-color: var(--light-color);
+}
+.currentColor {
+	fill: var(--light-color);
+}
+.badge {
+	position: relative;
+	border-radius: 50%;
+	left: -10%;
+	top: -5px;
+	font-size: var(--size-300);
+	aspect-ratio: 1/1;
+	color: black;
+	background-color: #f7e600;
+	width: fit-content;
+	height: fit-content;
+}
+@media (max-width: 991.98px) {
+	#iconSecond {
+		display: none !important;
+	}
+}
+@media (min-width: 991.98px) {
+	#iconFirst {
+		display: none !important;
+	}
+}

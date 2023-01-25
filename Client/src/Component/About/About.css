@@ -1,0 +1,29 @@
+.about{
+    background-color: #9797971a;
+    font-size: var(--size-600);
+}
+.imagecontainer .image{
+   float: right;
+   width: 40%;
+   height: 40%;
+   min-width: 10rem;
+   max-width: 13rem;
+   max-height: 15rem;
+   animation: moving 4s linear infinite;
+}
+@media (max-width:575.98px) {
+   .about{
+    font-size: var(--size-500);
+}
+}
+@keyframes moving {
+   0%{
+      transform: translateY(-5%);
+   }
+   50%{
+      transform: translateY(0%);
+   }
+   100%{
+      transform: translateY(-5%);
+   }
+}

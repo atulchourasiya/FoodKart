@@ -1,0 +1,18 @@
+#sidebarSectionContainer{
+   position: fixed;
+   width: 18rem;
+   height: 150vh!important;
+   padding: var(--size-400);
+   top: 0;
+   left: 0%;
+   z-index: 5000;
+   transform: translateX(-18rem);
+   transition: transform .2s linear;
+}
+.btn-close{
+   border: none!important;
+   box-shadow: none!important;
+}
+.sidebarOpen{
+   transform: translateX(0%)!important;
+}

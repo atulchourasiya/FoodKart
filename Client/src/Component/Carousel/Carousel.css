@@ -1,0 +1,27 @@
+#carouselExampleDark img {
+	width: 100%;
+	height: 50vh;
+	filter: contrast(140%);
+}
+.carousel-inner {
+	filter: brightness(50%);
+}
+.headerContent {
+	z-index: 1;
+	top: 30%;
+}
+
+@media (min-width: 991.98px) {
+	#carouselExampleDark img {
+		height: 100vh;
+	}
+}
+@media (max-width: 991.98px) {
+	.headerContent {
+		top: 20%;
+	}
+}
+
+.carousel-item {
+	transition: none!important;
+}

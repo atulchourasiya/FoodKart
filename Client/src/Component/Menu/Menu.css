@@ -1,0 +1,8 @@
+#menuContainer > div{
+	background-color: #ffffcad2;
+   border-radius: var(--size-400);
+}
+.menuCategoryText{
+   border-bottom: 2px dashed rgb(0, 0, 0);
+   cursor: pointer;;
+}

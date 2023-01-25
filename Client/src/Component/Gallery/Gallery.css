@@ -1,0 +1,29 @@
+.gridContainer {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	grid-gap: 12px;
+	height: 100vw;
+}
+.griditem {
+	aspect-ratio: 1 / 1;
+	filter: contrast(100%);
+	position: relative;
+}
+.griditemContainer {
+	position: relative;
+	
+}
+.griditemContainer::before {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	content: '';
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	width: 80%;
+	height: 80%;
+	border: calc(var(--size-100) - 2px ) solid rgb(255, 255, 255);
+	z-index: 1;
+}

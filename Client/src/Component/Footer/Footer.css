@@ -1,0 +1,32 @@
+#footerContainer {
+	width: 100%;
+	background-color: #0000001a;
+}
+#footerContainer p,
+#footerContainer div {
+	display: flex;
+	flex-direction: column;
+}
+.footer {
+	font-size: var(--size-300);
+}
+.categoryItem {
+	color: black !important;
+}
+@media (hover: hover)and (pointer:fine) {
+	#footerContainer a:hover,
+	#footerContainer a:hover img {
+		color: black;
+		transform: scale(105%);
+	}
+	.categoryItem:hover {
+		color: black !important;
+		transform: scale(105%);
+		cursor: pointer;
+	}
+	.footer a:hover {
+		color: white;
+		font-size: var(--size-300);
+		transform: scale(105%);
+	}
+}
