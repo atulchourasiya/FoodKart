@@ -1,34 +1,67 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { showToast } from '../../Component/Login/loginFunc';
+import { logoutUser } from '../../Component/Navbar/NavbarFunc';
 
 const initialState = {
 	cartArray: null,
+	deleteallproduct: false,
 	subTotal: 0,
-	orderID:0,
+	orderID: 0
 };
 
 export const fetchCartProduct = createAsyncThunk(
 	'cart/fetchCartProduct',
 	async (user, { dispatch }) => {
 		try {
+			dispatch(setDeleteAllProduct(false));
 			const response = await fetch(`${process.env.REACT_APP_API_HOST}/cart/fetchproduct`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Credentials': true
+					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({ user })
 			});
 			if (response.status === 200) {
-				const json = await response.json();
-				return json;
+				const res = await response.json();
+				dispatch(setDeleteAllProduct(false));
+				return res;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
+				return [];
 			} else throw new Error('Something went wrong!');
 		} catch (error) {
 			showToast('error', 'Failed to fetch cart details, please reload or try again later');
 			console.error(error);
 			return [];
+		}
+	}
+);
+
+export const deleteAllCartProduct = createAsyncThunk(
+	'cart/deleteCartProduct',
+	async (user, { dispatch }) => {
+		try {
+			const response = await fetch(`${process.env.REACT_APP_API_HOST}/cart/deleteallproduct`, {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ user })
+			});
+			if (response.status === 200) {
+				const res = await response.json();
+				dispatch(setCartArray([]));
+				return res;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
+			} else throw new Error('Something went wrong!');
+		} catch (error) {
+			showToast('error', 'Failed to fetch cart details, please reload or try again later');
+			console.error(error);
 		}
 	}
 );
@@ -39,6 +72,7 @@ export const addCartProduct = createAsyncThunk(
 		try {
 			const response = await fetch(`${process.env.REACT_APP_API_HOST}/cart/addproduct`, {
 				method: 'POST',
+				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json'
 				},
@@ -49,6 +83,9 @@ export const addCartProduct = createAsyncThunk(
 				showToast('success', 'Added to cart successfully.');
 				dispatch(fetchCartProduct(product.user));
 				return res;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
 			} else throw new Error('Something went wrong!');
 		} catch (error) {
 			console.error(error);
@@ -65,6 +102,7 @@ export const updatedCartProduct = createAsyncThunk(
 				`${process.env.REACT_APP_API_HOST}/cart/updateproduct/${product.id}`,
 				{
 					method: 'PUT',
+					credentials: 'include',
 					headers: {
 						'Content-Type': 'application/json'
 					},
@@ -75,6 +113,9 @@ export const updatedCartProduct = createAsyncThunk(
 				const res = await response.json();
 				dispatch(fetchCartProduct(product.user));
 				return res;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
 			} else throw new Error('Something went wrong!');
 		} catch (error) {
 			console.error(error);
@@ -91,6 +132,7 @@ export const deleteCartProduct = createAsyncThunk(
 				`${process.env.REACT_APP_API_HOST}/cart/deleteproduct/${product.id}`,
 				{
 					method: 'DELETE',
+					credentials: 'include',
 					headers: {
 						'Content-Type': 'application/json'
 					},
@@ -102,6 +144,9 @@ export const deleteCartProduct = createAsyncThunk(
 				dispatch(fetchCartProduct(product.user));
 				showToast('success', `${product.name} removed successfully.`);
 				return res;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
 			} else throw new Error('Something went wrong!');
 		} catch (error) {
 			console.error(error);
@@ -128,11 +173,14 @@ const cartSlice = createSlice({
 		setSubTotal(state, action) {
 			state.subTotal = action.payload;
 		},
-		setOrderID(state){
+		setOrderID(state) {
 			state.orderID = Math.floor(Math.random() * Date.now());
+		},
+		setDeleteAllProduct(state, action) {
+			state.deleteallproduct = action.payload;
 		}
 	}
 });
 
-export const { setCartArray ,setSubTotal,setOrderID} = cartSlice.actions;
+export const { setCartArray, setSubTotal, setOrderID, setDeleteAllProduct } = cartSlice.actions;
 export default cartSlice.reducer;

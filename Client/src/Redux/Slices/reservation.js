@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { showToast } from '../../Component/Login/loginFunc';
+import { logoutUser } from '../../Component/Navbar/NavbarFunc';
 
 const initialState = {
 	Reservation: null,
@@ -12,6 +13,7 @@ export const addReservation = createAsyncThunk(
 		try {
 			const response = await fetch(`${process.env.REACT_APP_API_HOST}/reservation/addreservation`, {
 				method: 'POST',
+				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json'
 				},
@@ -22,6 +24,9 @@ export const addReservation = createAsyncThunk(
 					'success',
 					'Thanks for booking, We’re looking forward to seeing you at foodkart! .'
 				);
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
 			} else throw new Error('Something went wrong!');
 		} catch (err) {
 			showToast('error', 'Something went wrong while making reservation.');

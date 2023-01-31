@@ -2,11 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import './MenuCard.css';
 import { handleAddToCart } from './MenuCardFunc';
 import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const MenuCard = (props) => {
 	const { user } = useSelector((state) => state.authState);
 	const { cartArray } = useSelector((state) => state.cartState);
 	const [block, setBlock] = useState(false);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	useEffect(()=>{
 		setBlock(false);
 	},[cartArray])
@@ -32,8 +35,7 @@ const MenuCard = (props) => {
 					disabled={block}
 					className='button'
 					onClick={() => {
-						setBlock(true);
-						handleAddToCart(props, user, cartArray, dispatch);
+						handleAddToCart(props, user, cartArray, dispatch,setBlock,navigate);
 					}}>
 					Add To Cart
 				</button>

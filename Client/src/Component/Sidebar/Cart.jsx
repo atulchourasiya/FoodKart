@@ -7,12 +7,14 @@ import './Cart.css';
 import { getSubTotal, toggleOrderPage } from './CartFunc';
 import { setOrderID, setSubTotal } from '../../Redux/Slices/cartSlice';
 import { showToast } from '../Login/loginFunc';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 	const { user } = useSelector((state) => state.authState);
 	let { cartArray } = useSelector((state) => state.cartState);
 	let { subTotal } = useSelector((state) => state.cartState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (cartArray !== null && cartArray.length > 0) {
 			dispatch(setSubTotal(getSubTotal(cartArray)));
@@ -38,7 +40,7 @@ const Cart = () => {
 				<button
 					type='button'
 					data-cartbutton
-					onClick={toggleCart}
+					onClick={_=>toggleCart(user,navigate)}
 					className='btn-close me-2 position-absolute'
 					aria-label='Close'
 					style={{ right: '0' }}></button>
@@ -62,7 +64,7 @@ const Cart = () => {
 			<div className='cartproduct'>
 				{cartArray !== null ? (
 					cartArray.length !== 0 ? (
-						cartArray.map((item, index) => {
+						cartArray?.map((item, index) => {
 							return (
 								<CartCard
 									key={`cartcard${index}`}
@@ -141,11 +143,14 @@ const Cart = () => {
 						<button
 							onClick={(_) =>
 								user !== null
-									? function () {
+									? (function () {
 											dispatch(setOrderID());
 											toggleOrderPage();
-									  }()
-									: showToast('warning', 'You need to login to unlock this feature')
+									  })()
+									: (function () {
+											showToast('warning', 'You need to login to unlock this feature');
+											navigate('/login')
+									  })()
 							}
 							className='button font-lato'
 							style={{ width: 'max-content' }}>

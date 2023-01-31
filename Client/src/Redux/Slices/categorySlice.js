@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { showToast } from '../../Component/Login/loginFunc';
 
 const initialState = {
-	CategoryArray: null,
+	CategoryArray: null
 };
 
 export const fetchCategory = createAsyncThunk('category/fetchcategory', async (_, { dispatch }) => {
@@ -11,15 +11,13 @@ export const fetchCategory = createAsyncThunk('category/fetchcategory', async (_
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Credentials': true
+				'Content-Type': 'application/json'
 			}
 		});
 		if (response.status === 200) {
 			const json = await response.json();
 			return json;
-		} else throw new Error('Something went wrong!');
+		}  else throw new Error('Something went wrong!');
 	} catch (err) {
 		console.error(err);
 		showToast('error', 'Failed to fetch category details, please reload or try again later');

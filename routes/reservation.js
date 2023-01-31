@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Reservation = require('../model/Reservation');
+const { auth } = require('../middleware/reqAuth');
 
-router.post('/addreservation', async (req, res) => {
+router.post('/addreservation', auth, async (req, res) => {
 	try {
 		const { user, firstname, lastname, mobile, date, time, seat, request } = req.body;
 		const reservation = new Reservation({

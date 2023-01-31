@@ -22,7 +22,6 @@ import Cart from './Component/Sidebar/Cart';
 import LoadingPage from './Component/LoadingPage/LoadingPage';
 import { useSelector } from 'react-redux';
 import Order from './Component/Order/Order';
-
 function App() {
 	const { initialLoading } = useSelector((state) => state.initialLoadingState);
 	return (

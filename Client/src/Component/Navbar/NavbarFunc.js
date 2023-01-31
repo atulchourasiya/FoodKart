@@ -1,6 +1,8 @@
 import { logout, setUser } from '../../Redux/Slices/authSlice';
+import { setCartArray } from '../../Redux/Slices/cartSlice';
+import { getToken, setToken } from '../../Redux/Slices/userSlice';
 import { showToast } from '../Login/loginFunc';
-
+let refreshTokenTimer = null;
 export const handleScroll = () => {
 	const navbar = document.getElementById('navbar');
 	const currentColor = document.getElementsByClassName('currentColor');
@@ -33,6 +35,15 @@ export const handleScroll = () => {
 	});
 };
 
+export const refreshToken = (dispatch, token) => {
+	if (refreshTokenTimer) {
+		clearInterval(refreshTokenTimer);
+	}
+	refreshTokenTimer = setInterval(() => {
+		dispatch(getToken(token));
+	}, 1000 * 60 * 60);
+};
+
 export const handleCurrentcolor = () => {
 	let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
 	const currentColor = document.getElementsByClassName('currentColor');
@@ -53,9 +64,13 @@ export const toggleSidebar = () => {
 		Sidebar.classList.remove('sidebarOpen');
 	} else Sidebar.classList.add('sidebarOpen');
 };
-export const toggleCart = (user) => {
+
+export const toggleCart = (user,navigate = null) => {
 	if (user === null) {
-		showToast('warning','You need to login to unlock cart feature')
+		showToast('warning', 'You need to login to unlock cart feature');
+		if(navigate!==null){
+			navigate('/login')
+		}
 		return;
 	}
 	const Cart = document.getElementById('cartSectionContainer');
@@ -65,8 +80,16 @@ export const toggleCart = (user) => {
 };
 
 export const logoutUser = async (dispatch) => {
+	const Cart = document.getElementById('cartSectionContainer');
+	const orderContainer = document.getElementById('orderSectionContainer');
+	orderContainer?.classList.remove('orderOpen');
+	Cart?.classList.remove('cartOpen');
 	await logout();
 	dispatch(setUser(null));
+	dispatch(setCartArray([]));
+	dispatch(setToken(false));
+	clearInterval(refreshTokenTimer);
+	refreshTokenTimer = null;
 };
 
 export const highlightNavlink = (about, service) => {

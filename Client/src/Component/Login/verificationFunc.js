@@ -22,7 +22,8 @@ export const checkIfVerified = (navigate, dispatch) => {
 					dispatch(
 						addUser({
 							name: auth.currentUser.displayName,
-							email: auth.currentUser.email
+							email: auth.currentUser.email,
+							userid:auth.currentUser.uid
 						})
 					);
 					clearTimer();

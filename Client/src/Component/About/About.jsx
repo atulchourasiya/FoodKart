@@ -1,6 +1,5 @@
 import React from 'react';
 import './About.css';
-import pizza from '../../Assets/About/dessert.png';
 import Heading from '../Heading/Heading';
 
 const About = () => {
@@ -8,7 +7,7 @@ const About = () => {
 		var fileInput = document.getElementById('fileInput');
 		var files = fileInput.files;
 		var formData = new FormData();
-		if (files.length != 0) {
+		if (files.length !== 0) {
 			for (const file of files) {
 				formData.append('images', file);
 			}
@@ -36,7 +35,7 @@ const About = () => {
 				<div>
 					<Heading subheading='About' heading='Who We Are' />
 					<div className='imagecontainer'>
-						<img className='image' src={pizza} alt='' />
+						<img className='image' src={'images/1675000010438-dessert.png'} alt='' />
 						Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque vitae sint, praesentium
 						odit nemo quibusdam ratione. Voluptatum fugit magnam eum dicta inventore hic, vero Lorem
 						ipsum dolor sit, amet consectetur adipisicing elit. Eos maiores dolorum itaque

@@ -46,9 +46,10 @@ export const handleReservationFormSubmit = async (
 	date,
 	time,
 	request,
-	dispatch
+	dispatch,
+	navigate
 ) => {
-	if (isUserNull(user)) {
+	if (isUserNull(user,navigate)) {
 		return;
 	}
 	if (

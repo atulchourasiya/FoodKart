@@ -22,7 +22,7 @@ const TestimonialCard = (props) => {
 					<hr className='m-auto mb-2' style={{width:'80%'}}/>
 					<img
 						className='rounded-circle m-auto'
-						src={props.img}
+						src={`images/${props.img}`}
 						width='48'
 						height='48'
 						alt=''></img>

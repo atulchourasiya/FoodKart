@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
-import logo from '../../Assets/Image/logo.png';
 import { highlightNavlink, toggleSidebar } from '../Navbar/NavbarFunc';
 import './Sidebar.css';
 const Sidebar = () => {
@@ -27,7 +26,7 @@ const Sidebar = () => {
 	return (
 		<div id='sidebarSectionContainer' className='rounded bg-light'>
 			<div className='d-flex justify-content-between mb-3'>
-				<img src={logo} alt='' height={24} />
+				<img src={`images/1675195335425-logo.png`} alt='' height={24} />
 				<button
 					type='button'
 					data-sidebarbutton

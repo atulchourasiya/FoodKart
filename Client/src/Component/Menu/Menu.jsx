@@ -43,7 +43,7 @@ const Menu = () => {
 							rewindByDrag: 'true',
 							pagination: false
 						}}>
-						{CategoryArray.map((item, index) => {
+						{CategoryArray?.map((item, index) => {
 							return (
 								<SplideSlide key={`SplideSlide${index}`}>
 									<div className={`menuCategoryText font-heebo mx-3 fw-bold`}>
@@ -57,7 +57,7 @@ const Menu = () => {
 				<div className='d-flex justify-content-center align-items-center flex-wrap p-4'>
 					{MenuArray !== null ? (
 						MenuArray.length !== 0 ? (
-							MenuArray.map((item, index) => {
+							MenuArray?.map((item, index) => {
 								if (item.category !== currentMenu) {
 									return '';
 								}

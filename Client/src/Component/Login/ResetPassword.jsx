@@ -1,6 +1,4 @@
 import React from 'react';
-import dessert from '../../Assets/Category/dessert.jpg';
-import logo from '../../Assets/Image/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { validateInput } from './signUpFunc';
@@ -47,7 +45,7 @@ const ResetPassword = () => {
 							<div className='row g-0'>
 								<div className='col-md-6 col-lg-5 d-none d-md-block'>
 									<img
-										src={dessert}
+										src={`images/1674222401843-dessert.jpg`}
 										alt='login form'
 										className='img-fluid h-100'
 										style={{ borderRadius: '1rem 0 0 1rem' }}
@@ -58,11 +56,11 @@ const ResetPassword = () => {
 										<form
 											onSubmit={(event) => {
 												event.preventDefault();
-												handleResetPassword(email,setLoading,navigate);
+												handleResetPassword(email, setLoading, navigate);
 											}}>
 											<div className='d-flex align-items-center mb-3 pb-1'>
 												<i className='fas fa-cubes fa-2x me-3' style={{ color: '#ff6219' }}></i>
-												<img src={logo} alt='' height={32} />
+												<img src={`images/1675195335425-logo.png`} alt='' height={32} />
 											</div>
 
 											<h5 className='fw-normal mb-3 pb-3' style={{ letterSpacing: '1px' }}>
@@ -95,7 +93,7 @@ const ResetPassword = () => {
 													disabled={loading}
 													className='btn btn-dark btn-lg btn-block'
 													type='submit'>
-													Reset 
+													Reset
 												</button>
 											</div>
 											<p className='mb-2 pb-lg-2' style={{ color: '#393f81' }}>

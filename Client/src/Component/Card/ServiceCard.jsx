@@ -10,7 +10,7 @@ const ServiceCard = (props) => {
 					border: 'none',
 					boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px'
 				}}>
-				<img src={props.img} style={{ height: '10rem' }} className='card-img-top' alt='...' />
+				<img src={`images/${props.img}`} style={{ height: '10rem' }} className='card-img-top' alt='...' />
 				<div className='card-body mb-2'>
 					<h5 className='card-title'>{props.heading}</h5>
 					<p className='card-text mb-3 font-lato'>

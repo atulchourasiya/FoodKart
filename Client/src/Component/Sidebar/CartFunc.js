@@ -5,7 +5,23 @@ export const getSubTotal = (cartArray) => {
 	});
 	return total;
 };
-export const toggleOrderPage=()=>{
+export const toggleOrderPage = () => {
 	let orderContainer = document.getElementById('orderSectionContainer');
+	let mobileField = document.getElementById('mobileField');
+	let postalField = document.getElementById('postalField');
+	let housenoField = document.getElementById('housenoField');
+	let addressField = document.getElementById('addressField');
+	mobileField.value = '';
+	postalField.value = '';
+	housenoField.value = '';
+	addressField.value = '';
+	mobileField.classList.remove('is-valid');
+	mobileField.classList.remove('is-invalid');
+	postalField.classList.remove('is-valid');
+	postalField.classList.remove('is-invalid');
+	housenoField.classList.remove('is-valid');
+	housenoField.classList.remove('is-invalid');
+	addressField.classList.remove('is-valid');
+	addressField.classList.remove('is-invalid');
 	orderContainer.classList.toggle('orderOpen');
-}
+};

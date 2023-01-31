@@ -1,13 +1,12 @@
-import burger from '../../Assets/SilderImage/burger.jpg';
-import sweet from '../../Assets/SilderImage/sweet.jpg';
-import desert from '../../Assets/SilderImage/desert.jpg';
-import sushi from '../../Assets/SilderImage/sushi.jpg';
-import main from '../../Assets/SilderImage/main.jpg';
 import './Carousel.css';
 import Search from '../Search/Search';
 import TypingEffect from '../TypingEffect/TypingEffect';
+import { useEffect } from 'react';
 
 function CarouselSilder() {
+	useEffect(() => {
+		document.getElementById('next').click();
+	}, []);
 	return (
 		<section
 			id='carouselExampleDark'
@@ -15,22 +14,22 @@ function CarouselSilder() {
 			data-bs-ride='carousel'
 			data-bs-pause='false'
 			data-bs-keyboard='true'
-			data-bs-interval='4000'>
+			data-bs-interval='3000'>
 			<div className='carousel-inner'>
 				<div className='carousel-item active'>
-					<img src={burger} className='d-block ' alt='...' />
+					<img src={`images/1675002591229-sweet.jpg`} className='d-block' alt='...' />
+				</div>
+				<div className='carousel-item '>
+					<img src={`images/1675002591171-burger.jpg`} className='d-block ' alt='...' />
 				</div>
 				<div className='carousel-item'>
-					<img src={sweet} className='d-block' alt='...' />
+					<img src={`images/1675002591198-desert.jpg`} className='d-block' alt='...' />
 				</div>
 				<div className='carousel-item'>
-					<img src={desert} className='d-block' alt='...' />
+					<img src={`images/1675002591219-sushi.jpg`} className='d-block' alt='...' />
 				</div>
 				<div className='carousel-item'>
-					<img src={sushi} className='d-block' alt='...' />
-				</div>
-				<div className='carousel-item'>
-					<img src={main} className='d-block' alt='...' />
+					<img src={`images/1675002591207-main.jpg`} className='d-block' alt='...' />
 				</div>
 			</div>
 			<div className='carousel-caption d-md-block headerContent'>
@@ -54,6 +53,7 @@ function CarouselSilder() {
 				<span className='visually-hidden'>Previous</span>
 			</button>
 			<button
+				id='next'
 				className='carousel-control-next'
 				type='button'
 				data-bs-target='#carouselExampleDark'

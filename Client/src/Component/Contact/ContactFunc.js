@@ -10,9 +10,10 @@ export const handleContactFormSubmit = (
 	message,
 	dispatch,
 	setLoading,
+	navigate,
 	LastContactDate
 ) => {
-	if (isUserNull(user)) {
+	if (isUserNull(user,navigate)) {
 		return;
 	}
 	let dateAfterOneDay;
@@ -43,9 +44,11 @@ export const handleContactFormSubmit = (
 	setLoading(false);
 };
 
-export const isUserNull = (user) => {
+export const isUserNull = (user,navigate = null) => {
 	if (user === null) {
 		showToast('warning', 'You need to login to unlock this feature.');
+		if(navigate!==null)
+		navigate('/login')
 		return true;
 	} else return false;
 };

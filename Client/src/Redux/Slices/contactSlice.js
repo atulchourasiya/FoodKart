@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { showToast } from '../../Component/Login/loginFunc';
+import { logoutUser } from '../../Component/Navbar/NavbarFunc';
 
 const initialState = {
 	LastContactDate: null
@@ -13,9 +14,7 @@ export const fetchLastContact = createAsyncThunk(
 				method: 'POST',
 				credentials: 'include',
 				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Credentials': true
+					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({ user })
 			});
@@ -24,6 +23,10 @@ export const fetchLastContact = createAsyncThunk(
 				if (json.length === 0) {
 					return null;
 				} else return json[0].date;
+			} else if (response.status === 401) {
+				showToast('warning', 'Your login session is expired login again to continue');
+				logoutUser(dispatch);
+				return null;
 			} else throw new Error('Something went wrong!');
 		} catch (err) {
 			console.error(err);
@@ -37,6 +40,7 @@ export const addContact = createAsyncThunk('contact/addContact', async (contact,
 	try {
 		const response = await fetch(`${process.env.REACT_APP_API_HOST}/contact/addcontact`, {
 			method: 'POST',
+			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -47,6 +51,9 @@ export const addContact = createAsyncThunk('contact/addContact', async (contact,
 			showToast('success', 'Message sent successfully to the owner.');
 			dispatch(fetchLastContact(contact.user));
 			return res;
+		} else if (response.status === 401) {
+			showToast('warning', 'Your login session is expired login again to continue');
+			logoutUser(dispatch);
 		} else throw new Error('Something went wrong!');
 	} catch (error) {
 		console.error(error);

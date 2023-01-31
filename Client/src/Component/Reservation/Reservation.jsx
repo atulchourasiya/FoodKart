@@ -4,11 +4,13 @@ import { handleReservationFormSubmit, maxDate, minDate } from './ReservationFunc
 import { useRef } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { isUserNull } from '../Contact/ContactFunc';
+import { useNavigate } from 'react-router-dom';
 
 const Reservation = () => {
 	const { user } = useSelector((state) => state.authState);
 	const { reservationLoading } = useSelector((state) => state.reservationState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const firstname = useRef();
 	const lastname = useRef();
 	const mobile = useRef();
@@ -32,7 +34,8 @@ const Reservation = () => {
 						date,
 						time,
 						request,
-						dispatch
+						dispatch,
+						navigate
 					);
 				}}>
 				<div className='col-md-4'>
@@ -43,7 +46,7 @@ const Reservation = () => {
 						ref={firstname}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						type='text'
 						className='form-control'
@@ -68,7 +71,7 @@ const Reservation = () => {
 						ref={lastname}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						className='form-control'
 						id='lastNameField'
@@ -94,7 +97,7 @@ const Reservation = () => {
 							ref={mobile}
 							readOnly={user === null ? true : false}
 							onClick={() => {
-								isUserNull(user);
+								isUserNull(user,navigate);
 							}}
 							id='phoneField'
 							onInput={(event) => {
@@ -119,7 +122,7 @@ const Reservation = () => {
 						ref={date}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						placeholder='dd-mm-yyyy'
 						type='date'
@@ -147,7 +150,7 @@ const Reservation = () => {
 						ref={time}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						onInput={(event) => {
 							validateInput(event, /([1][0-9]|[2][01])[:]([0-5][0-9])|(22:00)/);
@@ -170,7 +173,7 @@ const Reservation = () => {
 						ref={seat}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						placeholder='1'
 						onInput={(event) => {
@@ -193,7 +196,7 @@ const Reservation = () => {
 						ref={request}
 						readOnly={user === null ? true : false}
 						onClick={() => {
-							isUserNull(user);
+							isUserNull(user,navigate);
 						}}
 						rows='5'
 						placeholder='Any Special Request'

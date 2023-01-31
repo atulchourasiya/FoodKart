@@ -37,7 +37,7 @@ const Category = () => {
 						rewindByDrag: 'true',
 						pagination: false
 					}}>
-					{CategoryArray.map((item, index) => {
+					{CategoryArray?.map((item, index) => {
 						return (
 							<SplideSlide key={`SplideSlide${index}`}>
 								<CategoryCard

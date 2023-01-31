@@ -1,6 +1,4 @@
 import React from 'react';
-import dessert from '../../Assets/Category/dessert.jpg';
-import logo from '../../Assets/Image/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { handleLogin, showPassword } from './loginFunc';
@@ -21,7 +19,11 @@ const Login = () => {
 			style={{
 				background: 'linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))'
 			}}>
-			<div className='position-absolute top-0 left-0 pointer p-3' onClick={()=>{navigate('/')}}>
+			<div
+				className='position-absolute top-0 left-0 pointer p-3'
+				onClick={() => {
+					navigate('/');
+				}}>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					width='2rem'
@@ -48,7 +50,7 @@ const Login = () => {
 							<div className='row g-0'>
 								<div className='col-md-6 col-lg-5 d-none d-md-block'>
 									<img
-										src={dessert}
+										src={`images/1674222401843-dessert.jpg`}
 										alt='login form'
 										className='img-fluid h-100'
 										style={{ borderRadius: '1rem 0 0 1rem' }}
@@ -71,7 +73,7 @@ const Login = () => {
 											}}>
 											<div className='d-flex align-items-center mb-3 pb-1'>
 												<i className='fas fa-cubes fa-2x me-3' style={{ color: '#ff6219' }}></i>
-												<img src={logo} alt='' height={32} />
+												<img src={`images/1675195335425-logo.png`} alt='' height={32} />
 											</div>
 
 											<h5 className='fw-normal mb-3 pb-3' style={{ letterSpacing: '1px' }}>

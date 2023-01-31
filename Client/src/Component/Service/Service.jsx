@@ -1,9 +1,11 @@
 import ServiceCard from '../Card/ServiceCard';
-import './Service.css'
+import './Service.css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import Heading from '../Heading/Heading';
-import { ServiceArray } from './ServiceFunc';
+import { useSelector } from 'react-redux';
+
 const Service = () => {
+	const { ServiceArray } = useSelector((state) => state.serviceState);
 	return (
 		<section id='serviceSectionContainer' className='p-4'>
 			<Heading heading='What We Offer' subheading='Our Services' position='start' />
@@ -19,10 +21,15 @@ const Service = () => {
 					rewindByDrag: 'true',
 					pagination: false
 				}}>
-				{ServiceArray.map((item, index) => {
+				{ServiceArray?.map((item, index) => {
 					return (
 						<SplideSlide key={`SplideSlide${index}`}>
-							<ServiceCard img={item.img} heading={item.heading} btnText={item.btnText} link={item.link}/>
+							<ServiceCard
+								img={item.img}
+								heading={item.heading}
+								btnText={item.btnText}
+								link={item.link}
+							/>
 						</SplideSlide>
 					);
 				})}

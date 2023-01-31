@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Menu = require('../model/Menu');
 
-// router.post('/addamenu', async (req, res) => {
+// router.post('/addamenu',async (req, res) => {
 // 	try {
 // 		const { img, category, price, description, categoryName, name, productid } = req.body;
 // 		const menu = new Menu({
@@ -24,7 +24,11 @@ const Menu = require('../model/Menu');
 
 router.get('/fetchmenu', async (req, res) => {
 	try {
-		const menu = await Menu.find();
+		let menu = await Menu.find();
+		menu = menu.map((item) => {
+			let { img, category, price, description, categoryName, name, productid } = item;
+			return { img, category, price, description, categoryName, name, productid };
+		});
 		res.json(menu);
 	} catch (error) {
 		console.error(error.message);

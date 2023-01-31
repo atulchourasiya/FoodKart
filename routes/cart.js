@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Cart = require('../model/Cart');
+const { auth } = require('../middleware/reqAuth');
 
-router.post('/addproduct', async (req, res) => {
+router.post('/addproduct', auth, async (req, res) => {
 	try {
-		const { img, price, description, name, user, quantity,productid } = req.body;
+		const { img, price, description, name, user, quantity, productid } = req.body;
 		const cartProduct = new Cart({
 			img,
 			user,
@@ -22,7 +23,7 @@ router.post('/addproduct', async (req, res) => {
 	}
 });
 
-router.put('/updateproduct/:id', async (req, res) => {
+router.put('/updateproduct/:id', auth, async (req, res) => {
 	try {
 		const { img, price, description, name, user, quantity, productid } = req.body;
 		let isVerified = false;
@@ -75,7 +76,7 @@ router.put('/updateproduct/:id', async (req, res) => {
 	}
 });
 
-router.post('/fetchproduct', async (req, res) => {
+router.post('/fetchproduct',auth, async (req, res) => {
 	try {
 		const cartProducts = await Cart.find({ user: req.body.user });
 		res.json(cartProducts);
@@ -85,7 +86,17 @@ router.post('/fetchproduct', async (req, res) => {
 	}
 });
 
-router.delete('/deleteproduct/:id', async (req, res) => {
+router.post('/deleteallproduct',auth, async (req, res) => {
+	try {
+		const cartProducts = await Cart.deleteMany({ user: req.body.user });
+		res.json(cartProducts);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send('Internal Server Error');
+	}
+});
+
+router.delete('/deleteproduct/:id', auth, async (req, res) => {
 	try {
 		const existingProduct = await Cart.findById(req.params.id);
 		let isVerified = false;

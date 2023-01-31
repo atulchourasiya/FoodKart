@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import { login, setUser } from '../../Redux/Slices/authSlice';
-
+import { login } from '../../Redux/Slices/authSlice';
+import { getToken } from '../../Redux/Slices/userSlice';
 export const handleLogin = async (
 	email,
 	password,
@@ -21,13 +21,7 @@ export const handleLogin = async (
 		setLoading(true);
 		let userCredential = await login(email.current.value, password.current.value);
 		if (userCredential.user.emailVerified) {
-			dispatch(
-				setUser({
-					name: userCredential.user.displayName,
-					email: userCredential.user.email,
-					emailVerified: userCredential.user.emailVerified
-				})
-			);
+			dispatch(getToken(userCredential.user.uid));
 			showToast('success', 'Login Successfully.');
 			setLoading(false);
 			navigate('/');
@@ -52,6 +46,7 @@ export const handleLogin = async (
 	}
 	setLoading(false);
 };
+
 export const loginTimerFunction = (setLoading, setTimer) => {
 	let timer = 60;
 	setLoading(true);

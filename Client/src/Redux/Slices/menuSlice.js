@@ -5,7 +5,7 @@ const initialState = {
 	MenuArray: null,
 	currentMenu: 'burger',
 	currentMenuName: 'Burger',
-	highlightMenu: false,
+	highlightMenu: false
 };
 
 export const fetchMenu = createAsyncThunk('menu/fetchmenu', async (_, { dispatch }) => {
@@ -14,15 +14,13 @@ export const fetchMenu = createAsyncThunk('menu/fetchmenu', async (_, { dispatch
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Credentials': true
+				'Content-Type': 'application/json'
 			}
 		});
 		if (response.status === 200) {
 			const json = await response.json();
 			return json;
-		} else throw new Error('Something went wrong!');
+		}  else throw new Error('Something went wrong!');
 	} catch (err) {
 		console.error(err);
 		showToast('error', 'Failed to fetch menu details, please reload or try again later');

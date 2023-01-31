@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import dessert from '../../Assets/Category/dessert.jpg';
-import logo from '../../Assets/Image/logo.png';
 import { useRef } from 'react';
 import { handleSignup, matchPassword, validateInput } from './signUpFunc';
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +49,7 @@ const Signup = () => {
 							<div className='row g-0'>
 								<div className='col-md-6 col-lg-5 d-none d-md-block'>
 									<img
-										src={dessert}
+										src={`images/1674222401843-dessert.jpg`}
 										alt='login form'
 										className='img-fluid h-100'
 										style={{ borderRadius: '1rem 0 0 1rem' }}
@@ -66,7 +64,7 @@ const Signup = () => {
 											}}>
 											<div className='d-flex align-items-center mb-3 pb-1'>
 												<i className='fas fa-cubes fa-2x me-3' style={{ color: '#ff6219' }}></i>
-												<img src={logo} alt='' height={32} />
+												<img src={`images/1675195335425-logo.png`} alt='' height={32} />
 											</div>
 
 											<h5 className='fw-normal mb-3 pb-3' style={{ letterSpacing: '1px' }}>

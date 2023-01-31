@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { handleContactFormSubmit, isUserNull } from './ContactFunc';
 import { useRef, useState } from 'react';
 import { showToast } from '../Login/loginFunc';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
 	let { user } = useSelector((state) => state.authState);
 	let { LastContactDate } = useSelector((state) => state.contactState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const name = useRef();
 	const email = useRef();
@@ -95,6 +97,7 @@ const Contact = () => {
 						message,
 						dispatch,
 						setLoading,
+						navigate,
 						LastContactDate
 					);
 				}}>
@@ -113,7 +116,7 @@ const Contact = () => {
 										: ''
 								}
 								onClick={() => {
-									if (!isUserNull(user)) {
+									if (!isUserNull(user,navigate)) {
 										showToast(
 											'warning',
 											"This field can't be edit. you just have to type message & send."
@@ -132,7 +135,7 @@ const Contact = () => {
 								ref={email}
 								value={user !== null ? user.email : ''}
 								onClick={() => {
-									if (!isUserNull(user)) {
+									if (!isUserNull(user,navigate)) {
 										showToast(
 											'warning',
 											"This field can't be edit. you just have to type message & send."
@@ -153,7 +156,7 @@ const Contact = () => {
 							maxLength={'500'}
 							readOnly={user === null ? true : false}
 							onClick={() => {
-								isUserNull(user);
+								isUserNull(user,navigate);
 							}}
 							rows='3'></textarea>
 					</div>

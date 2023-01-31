@@ -1,14 +1,19 @@
 import { addCartProduct } from '../../Redux/Slices/cartSlice';
 import { showToast } from '../Login/loginFunc';
 
-export const handleAddToCart = (props, user, cartArray, dispatch) => {
+export const handleAddToCart = (props, user, cartArray, dispatch, setBlock,navigate) => {
+	setBlock(true);
 	if (user === null) {
-		showToast('info', 'You need to login to unlock cart feature');
+		showToast('warning', 'You need to login to unlock cart feature');
+		navigate('/login')
+		setBlock(false);
 	} else {
 		if (cartArray === null) {
 			showToast('error', 'Failed to fetch cart details, please reload or try again later');
+			setBlock(false);
 		} else if (cartArray.length >= 10) {
 			showToast('warning', 'Cart limit is max 10 products.');
+			setBlock(false);
 		} else {
 			let isPresent = false;
 			cartArray.every((item) => {

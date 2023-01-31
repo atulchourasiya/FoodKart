@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import dessert from '../../Assets/Category/dessert.jpg';
 import {
 	checkIfVerified,
 	resendVerificationLink,
@@ -10,8 +9,8 @@ import { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useDispatch } from 'react-redux';
-import logo from '../../Assets/Image/logo.png';
 import { setCartArray } from '../../Redux/Slices/cartSlice';
+import { showToast } from './loginFunc';
 
 const Verification = () => {
 	const navigate = useNavigate();
@@ -46,7 +45,7 @@ const Verification = () => {
 							<div className='row g-0'>
 								<div className='col-md-6 col-lg-5 d-none d-md-block'>
 									<img
-										src={dessert}
+										src={`images/1674222401843-dessert.jpg`}
 										alt='login form'
 										className='img-fluid h-100'
 										style={{ borderRadius: '1rem 0 0 1rem' }}
@@ -56,7 +55,7 @@ const Verification = () => {
 									<div className='card-body px-4 text-black'>
 										<div className='d-flex align-items-center mb-3 pb-1'>
 											<i className='fas fa-cubes fa-2x me-3' style={{ color: '#ff6219' }}></i>
-											<img src={logo} alt='' height={32} />
+											<img src={`images/1675195335425-logo.png`} alt='' height={32} />
 										</div>
 
 										<h5 className='fw-normal mb-3 pb-3 font-lato' style={{ letterSpacing: '1px' }}>
@@ -75,6 +74,19 @@ const Verification = () => {
 													resendVerificationLink(setLoading, setTimer);
 												}}>
 												Resend Email {loading === true ? `${timer}s` : ''}
+											</button>
+											<button
+												className='btn btn-dark btn-lg btn-block me-2'
+												type='button'
+												onClick={async () => {
+													await auth.currentUser.reload();
+													if (!auth.currentUser.emailVerified) {
+														showToast('warning', 'Your email is still not verified.');
+													} else {
+														checkIfVerified(navigate, dispatch);
+													}
+												}}>
+												Verified
 											</button>
 											<button
 												className='btn btn-dark btn-lg btn-block'

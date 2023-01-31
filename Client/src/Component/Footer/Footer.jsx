@@ -1,9 +1,4 @@
 import './Footer.css';
-import facebook from '../../Assets/Social/facebook.png';
-import insta from '../../Assets/Social/insta.png';
-import twitter from '../../Assets/Social/twitter.png';
-import github from '../../Assets/Social/github.png';
-import linkedin from '../../Assets/Social/linkedin.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentMenuName, setMenuState } from '../../Redux/Slices/menuSlice';
 import { NavHashLink } from 'react-router-hash-link';
@@ -26,7 +21,7 @@ const Footer = () => {
 					<div>
 						<p className='fs-5 fw-bold'>Menu</p>
 						<div className='d-flex w-100'>
-							{CategoryArray.map((item, index) => {
+							{CategoryArray?.map((item, index) => {
 								return (
 									<NavHashLink
 										to={'/menu/#menuContainer'}
@@ -52,22 +47,22 @@ const Footer = () => {
 									target='_blank'
 									rel='noopener'
 									href='https://www.facebook.com/atul.chourasiya.756859'>
-									<img width={24} src={facebook} alt='facebook' />
+									<img width={24} src={`images/1675000182104-facebook.png`} alt='facebook' />
 								</a>
 							</li>
 							<li className='p-1'>
 								<a target='_blank' rel='noopener' href='https://www.instagram.com/atulchourasiyaa'>
-									<img width={24} src={insta} alt='instagram' />
+									<img width={24} src={`images/1675000182105-insta.png`} alt='instagram' />
 								</a>
 							</li>
 							<li className='p-1'>
 								<a target='_blank' rel='noopener' href='https://twitter.com/AtulChourasiyaa'>
-									<img width={24} src={twitter} alt='twitter' />
+									<img width={24} src={`images/1675000182105-linkedin.png`} alt='twitter' />
 								</a>
 							</li>
 							<li className='p-1'>
 								<a target='_blank' rel='noopener' href='https://github.com/atulchourasiya/'>
-									<img width={24} src={github} alt='github' />
+									<img width={24} src={`images/1675000182105-github.png`} alt='github' />
 								</a>
 							</li>
 							<li className='p-1'>
@@ -75,7 +70,7 @@ const Footer = () => {
 									target='_blank'
 									rel='noopener'
 									href='https://www.linkedin.com/in/atul-chourasiya-7414ba215/'>
-									<img width={24} src={linkedin} alt='linkedin' />
+									<img width={24} src={`images/1675000182105-linkedin.png`} alt='linkedin' />
 								</a>
 							</li>
 						</ul>

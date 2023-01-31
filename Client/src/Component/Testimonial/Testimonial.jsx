@@ -1,14 +1,15 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import { useSelector } from 'react-redux';
 import TestimonialCard from '../Card/TestimonialCard';
 import Heading from '../Heading/Heading';
-import { TestimonialArray } from './TestimonialFunc';
 
 const Testimonial = () => {
+	const { TestimonialArray } = useSelector((state) => state.testimonialState);
 	return (
 		<section id='Testimonial'>
-			<Heading heading='Why Our Client Choose Us' subheading='Testimonial' position='center'/>
+			<Heading heading='Why Our Client Choose Us' subheading='Testimonial' position='center' />
 			<Splide
 				aria-label='My Favorite Images'
 				extensions={{ AutoScroll }}
@@ -26,7 +27,7 @@ const Testimonial = () => {
 						pauseOnHover: false
 					}
 				}}>
-				{TestimonialArray.map((item, index) => {
+				{TestimonialArray?.map((item, index) => {
 					return (
 						<SplideSlide key={`SplideSlide${index}`}>
 							<TestimonialCard

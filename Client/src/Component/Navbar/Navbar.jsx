@@ -1,4 +1,3 @@
-import logo from '../../Assets/Image/logo.png';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 import './Navbar.css';
 import { useEffect, useRef } from 'react';
@@ -7,23 +6,25 @@ import {
 	handleScroll,
 	highlightNavlink,
 	logoutUser,
+	refreshToken,
 	toggleCart,
 	toggleSidebar
 } from './NavbarFunc';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../firebase';
 import { setUser } from '../../Redux/Slices/authSlice';
-import userIcon from '../../Assets/Image/user.png';
 import tippy from 'tippy.js';
 import 'tippy.js/themes/light.css';
-import { fetchCartProduct, setCartArray } from '../../Redux/Slices/cartSlice';
+import { fetchCartProduct } from '../../Redux/Slices/cartSlice';
 import { fetchLastContact } from '../../Redux/Slices/contactSlice';
 
 function NavigationBar() {
-	const { user } = useSelector((state) => state.authState);
-	const { cartArray } = useSelector((state) => state.cartState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { user } = useSelector((state) => state.authState);
+	const { token } = useSelector((state) => state.userState);
+	const { cartArray } = useSelector((state) => state.cartState);
 	const about = useRef();
 	const service = useRef();
 	const highlightFunc = highlightNavlink.bind(this, about, service);
@@ -45,11 +46,10 @@ function NavigationBar() {
 					setUser({
 						name: user.displayName,
 						email: user.email,
+						userid: user.uid,
 						emailVerified: user.emailVerified
 					})
 				);
-				dispatch(fetchCartProduct(user.email));
-				dispatch(fetchLastContact(user.email));
 			}
 		});
 		handleScroll();
@@ -58,6 +58,13 @@ function NavigationBar() {
 			document.removeEventListener('scroll', highlightFunc);
 		};
 	}, []);
+	useEffect(() => {
+		if (token && user !== null) {
+			refreshToken(dispatch, user?.userid);
+			dispatch(fetchCartProduct(user?.email));
+			dispatch(fetchLastContact(user?.email));
+		}
+	}, [token, user]);
 	useEffect(() => {
 		tippy('#userIconTippy', {
 			content: `
@@ -84,7 +91,7 @@ function NavigationBar() {
 						<span className='navbar-toggler-icon'></span>
 					</button>
 					<NavHashLink to={'/#'} className='navbar-brand d-flex align-center'>
-						<img src={logo} height={26} alt='logo' />
+						<img src={`images/1675195335425-logo.png`} height={26} alt='logo' />
 					</NavHashLink>
 				</div>
 				<div id='iconFirst' className='d-flex align-items-center justify-content-center'>
@@ -94,7 +101,7 @@ function NavigationBar() {
 						viewBox='0 0 16 16'
 						data-cartbutton
 						onClick={() => {
-							toggleCart(user);
+							toggleCart(user, navigate);
 						}}>
 						<path d='M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z' />
 					</svg>
@@ -116,7 +123,12 @@ function NavigationBar() {
 						</Link>
 					) : (
 						<div className='d-flex align-items-center justify-content-center flex-column ms-3'>
-							<img id='userIconTippy' src={userIcon} alt='' className=' iconSize' />
+							<img
+								id='userIconTippy'
+								src={`images/1675195335426-user.png`}
+								alt=''
+								className=' iconSize'
+							/>
 							<button className='fs-6 btn text-light font-lato  border-0 p-0'>
 								<u
 									style={{
@@ -125,7 +137,6 @@ function NavigationBar() {
 									}}
 									onClick={() => {
 										logoutUser(dispatch);
-										dispatch(setCartArray([]));
 									}}>
 									Logout
 								</u>
@@ -182,7 +193,7 @@ function NavigationBar() {
 						viewBox='0 0 16 16'
 						data-cartbutton
 						onClick={() => {
-							toggleCart(user);
+							toggleCart(user, navigate);
 						}}>
 						<path d='M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z' />
 					</svg>
@@ -204,7 +215,12 @@ function NavigationBar() {
 						</Link>
 					) : (
 						<div className='d-flex align-items-center justify-content-center flex-column ms-3'>
-							<img id='userIconTippy' src={userIcon} alt='' className=' iconSize' />
+							<img
+								id='userIconTippy'
+								src={`images/1675195335426-user.png`}
+								alt=''
+								className=' iconSize'
+							/>
 							<button className='fs-6 btn text-light font-lato  border-0 p-0'>
 								<u
 									style={{
@@ -213,7 +229,6 @@ function NavigationBar() {
 									}}
 									onClick={() => {
 										logoutUser(dispatch);
-										dispatch(setCartArray([]));
 									}}>
 									Logout
 								</u>
