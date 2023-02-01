@@ -2,9 +2,15 @@
   "short_name": "FoodKart",
   "name": "FoodKart",
   "icons": [
+      {
+      "src": "maskable.png",
+      "sizes": "930x930",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
