@@ -21,10 +21,10 @@ const TestimonialCard = (props) => {
 					<p className='card-text font-script fs-3 mb-4'>{props.testimonial}</p>
 					<hr className='m-auto mb-2' style={{width:'80%'}}/>
 					<img
-						className='rounded-circle m-auto'
+						className='rounded-circle m-auto d-flex align-items-center justify-content-center'
 						src={`images/${props.img}`}
-						width='48'
-						height='48'
+						width='35'
+						height='35'
 						alt=''></img>
 					<p className='d-flex justify-content-center font-script fw-bold fs-4 mt-2' style={{lineHeight:1}}>-{props.name}</p>
 					<p className='d-flex justify-content-center  font-lato fst-italic'>{props.desination}</p>
