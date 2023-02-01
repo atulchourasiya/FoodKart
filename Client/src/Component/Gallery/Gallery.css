@@ -10,6 +10,9 @@
 	filter: contrast(100%);
 	position: relative;
 }
+.griditem {
+	height: 100%;
+}
 .griditemContainer {
 	position: relative;
 	

@@ -11,12 +11,6 @@
 .orderOpen {
 	top: 0% !important;
 }
-.orderForm {
-	height: calc(100% -4rem);
-}
-.inputOrderField {
-	height: 100%;
-}
 .gpayButtonSize {
 	display: flex;
 	align-items: center;
