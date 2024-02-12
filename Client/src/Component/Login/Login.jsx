@@ -84,6 +84,7 @@ const Login = () => {
 												<input
 													type='email'
 													ref={email}
+													defaultValue={'atulchourasiya73@gmail.com'}
 													onInput={(event) =>
 														validateInput(
 															event,
@@ -91,7 +92,7 @@ const Login = () => {
 														)
 													}
 													placeholder='E-mail'
-													className='form-control form-control-lg font-lato'
+													className='form-control form-control-lg font-lato is-valid'
 													required
 													style={{ fontSize: 'var(--fs-400)' }}
 												/>
@@ -105,11 +106,12 @@ const Login = () => {
 												<input
 													type='password'
 													ref={password}
+													defaultValue={123456}
 													placeholder='Password'
 													onInput={(event) => {
 														validateInput(event, /^(?=\S*[0-9])\S{6,20}$/);
 													}}
-													className=' d-inline align-middle form-control form-control-lg font-lato'
+													className=' d-inline align-middle form-control form-control-lg font-lato is-valid'
 													required
 													style={{ fontSize: 'var(--fs-400)', width: 'calc(100% - 2.6rem)' }}
 												/>

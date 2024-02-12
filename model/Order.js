@@ -32,6 +32,15 @@ const OrderSchema = mongoose.Schema({
 	mobile: {
 		type: String,
 		required: true
+	},
+	paymentId: {
+		type: String,
+		required: true
+	},
+	paymentStatus: {
+		type: String,
+		enum : ['pending','success','failed'],
+		required: true
 	}
 });
 

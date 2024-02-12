@@ -5,7 +5,8 @@ const { auth } = require('../middleware/reqAuth');
 
 router.post('/addorder', async (req, res) => {
 	try {
-		const { orderId, user,name, amount, mobile, address, postalcode, houseno } = req.body;
+		const { orderId, user,name, amount, mobile, address, postalcode, houseno ,paymentId , paymentStatus} = req.body;
+		console.log(req.body);
 		const order = new Order({
 			orderId,
 			user,
@@ -14,7 +15,9 @@ router.post('/addorder', async (req, res) => {
 			mobile,
 			address,
 			postalcode,
-			houseno
+			houseno,
+			paymentId,
+			paymentStatus,
 		});
 		const savedOrder = await order.save();
 		res.status(200).json(savedOrder);

@@ -3,7 +3,7 @@ import { showToast } from '../../Component/Login/loginFunc';
 import { logoutUser } from '../../Component/Navbar/NavbarFunc';
 
 const initialState = {
-	orderId : null
+	order : null
 };
 
 export const addOrder = createAsyncThunk('order/addOrder', async (order, { dispatch }) => {
@@ -18,6 +18,7 @@ export const addOrder = createAsyncThunk('order/addOrder', async (order, { dispa
 		});
 		if (response.status === 200) {
 			const res = await response.json();
+			console.log(res);
 			return res;
 		} else if (response.status === 401) {
 			showToast('warning', 'Your login session is expired login again to continue');
@@ -32,6 +33,12 @@ export const addOrder = createAsyncThunk('order/addOrder', async (order, { dispa
 const orderSlice = createSlice({
 	name: 'Order',
 	initialState,
+	reducers: {
+		setOrderState(state, action) {
+			state.order = action.payload;
+		},
+	}
 });
 
+export const { setOrderState } = orderSlice.actions;
 export default orderSlice.reducer;

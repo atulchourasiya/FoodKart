@@ -13,6 +13,7 @@ const testimonial = require('./routes/testimonial');
 const service = require('./routes/service');
 const user = require('./routes/user');
 const order = require('./routes/order');
+const payment = require('./routes/payment.js');
 const connectToMongoose = require('./config.js/mongo');
 const uploader = require('./middleware/multer.js');
 
@@ -35,6 +36,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'build')));
 app.use('/menu', menu);
 app.use('/cart', cart);
@@ -45,6 +47,7 @@ app.use('/testimonial', testimonial);
 app.use('/service', service);
 app.use('/order', order);
 app.use('/user', user);
+app.use('/payment', payment);
 
 app.post('/single', uploader.single('image'), (req, res) => {
 	if (req.file) {
@@ -61,9 +64,9 @@ app.post('/multiple', uploader.array('images', 20), (req, res) => {
 		res.status(400).send('Please upload a valid images');
 	}
 });
-app.get('/*', function (req, res) {
-	res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/*', function (req, res) {
+// 	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.listen(PORT, () => {
 	console.log(`Congrats! your server is listening on port ${PORT}`);

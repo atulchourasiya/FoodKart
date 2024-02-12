@@ -10,6 +10,7 @@ import reservationSlice from './Slices/reservation';
 import serviceSlice from './Slices/serviceSlice';
 import testimonialSlice from './Slices/testimonialSlice';
 import userSlice from './Slices/userSlice';
+import paymentSlice from './Slices/paymentSlice';
 
 const store = configureStore({
 	reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
 		testimonialState:testimonialSlice,
 		serviceState:serviceSlice,
 		orderState:orderSlice,
+		paymentState:paymentSlice,
 		reservationState: reservationSlice,
 		initialLoadingState: loadingSlice
 	}

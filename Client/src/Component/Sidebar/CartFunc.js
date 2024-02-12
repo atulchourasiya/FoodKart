@@ -6,7 +6,6 @@ export const getSubTotal = (cartArray) => {
 	return total;
 };
 export const toggleOrderPage = () => {
-	let orderContainer = document.getElementById('orderSectionContainer');
 	let mobileField = document.getElementById('mobileField');
 	let postalField = document.getElementById('postalField');
 	let housenoField = document.getElementById('housenoField');
@@ -23,5 +22,9 @@ export const toggleOrderPage = () => {
 	housenoField.classList.remove('is-invalid');
 	addressField.classList.remove('is-valid');
 	addressField.classList.remove('is-invalid');
+};
+
+export const openCloseOrderPage = () => {
+	let orderContainer = document.getElementById('orderSectionContainer');
 	orderContainer.classList.toggle('orderOpen');
 };

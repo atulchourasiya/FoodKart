@@ -4,7 +4,7 @@ import CartCard from '../Card/CartCard';
 import { toggleCart } from '../Navbar/NavbarFunc';
 import BeatLoader from 'react-spinners/BeatLoader';
 import './Cart.css';
-import { getSubTotal, toggleOrderPage } from './CartFunc';
+import { getSubTotal, openCloseOrderPage } from './CartFunc';
 import { setOrderID, setSubTotal } from '../../Redux/Slices/cartSlice';
 import { showToast } from '../Login/loginFunc';
 import { useNavigate } from 'react-router-dom';
@@ -145,7 +145,7 @@ const Cart = () => {
 								user !== null
 									? (function () {
 											dispatch(setOrderID());
-											toggleOrderPage();
+											openCloseOrderPage();
 									  })()
 									: (function () {
 											showToast('warning', 'You need to login to unlock this feature');

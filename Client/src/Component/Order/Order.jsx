@@ -1,18 +1,17 @@
 import './Order.css';
 import { useRef, useState } from 'react';
 import { validateInput } from '../Login/signUpFunc';
-import { toggleOrderPage } from '../Sidebar/CartFunc';
+import { openCloseOrderPage, toggleOrderPage ,  } from '../Sidebar/CartFunc';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkIfValid } from './OrderFunc';
-import GooglePayButton from '@google-pay/button-react';
 import { showToast } from '../Login/loginFunc';
 import { deleteAllCartProduct } from '../../Redux/Slices/cartSlice';
-import { toggleCart } from '../Navbar/NavbarFunc';
-import { addOrder } from '../../Redux/Slices/orderSlice';
+import { addOrder, setOrderState } from '../../Redux/Slices/orderSlice';
 import { useNavigate } from 'react-router-dom';
+import { initializePayment } from '../../Redux/Slices/paymentSlice';
 
 const Order = () => {
-	const [paymentState, setPaymenState] = useState(false);
+	const [paymentState, setPaymenState] = useState(true);
 	const { user } = useSelector((state) => state.authState);
 	const { subTotal } = useSelector((state) => state.cartState);
 	const { orderID } = useSelector((state) => state.cartState);
@@ -22,13 +21,7 @@ const Order = () => {
 	const postalcode = useRef();
 	const houseno = useRef();
 	const address = useRef();
-	function processPayment() {
-		return new Promise(function (resolve, reject) {
-			setTimeout(function () {
-				resolve();
-			}, 1000);
-		});
-	}
+
 	return (
 		<div id='orderSectionContainer' className='rounded bg-light'>
 			<script src='https://js.instamojo.com/v1/checkout.js'></script>
@@ -37,7 +30,10 @@ const Order = () => {
 				<button
 					type='button'
 					data-cartbutton
-					onClick={toggleOrderPage}
+					onClick={()=>{
+						toggleOrderPage();
+						openCloseOrderPage();
+					}}
 					className='btn-close me-2 position-absolute'
 					aria-label='Close'
 					style={{ right: '0' }}></button>
@@ -69,12 +65,29 @@ const Order = () => {
 						showToast('warning', 'Please review the fields marked in red.');
 						return;
 					}
+					else {
+						dispatch(
+							setOrderState({
+								orderId: orderID,
+								user: user.email,
+								name: user.name,
+								amount: subTotal + Math.ceil(subTotal * 0.18),
+								mobile: mobile.current.value,
+								address: address.current.value,
+								postalcode: postalcode.current.value,
+								houseno: houseno.current.value
+							})
+						);
+						dispatch(initializePayment({
+								amount: subTotal + Math.ceil(subTotal * 0.18)
+							}));
+					}
 				}}>
 				<div className='col-md-6 inputOrderField'>
 					<input
 						type='text'
 						id='mobileField'
-						className='form-control lh-5'
+						className='form-control lh-5 is-valid'
 						ref={mobile}
 						onInput={(event) => {
 							validateInput(event, /^[6789]\d{9}$/);
@@ -82,6 +95,7 @@ const Order = () => {
 							setPaymenState(valid);
 						}}
 						placeholder={'Mobile No.'}
+						defaultValue = {1234567890}
 						required
 					/>
 					<div className='valid-feedback'>Looks good!</div>
@@ -93,9 +107,10 @@ const Order = () => {
 					<input
 						type='text'
 						id='postalField'
-						className='form-control lh-5'
+						className='form-control lh-5 is-valid'
 						ref={postalcode}
 						placeholder='Postal Code'
+						defaultValue={462001}
 						onInput={(event) => {
 							validateInput(event, /^[1-9][0-9]{5}$/);
 							let valid = checkIfValid(mobile, postalcode, houseno, address);
@@ -109,9 +124,10 @@ const Order = () => {
 					<input
 						type='text'
 						id='housenoField'
-						className='form-control lh-5'
-						ref={houseno}
+						className='form-control lh-5 is-valid'
 						placeholder='House No.'
+						defaultValue={123}
+						ref={houseno}
 						onInput={(event) => {
 							validateInput(event, /^(.|\n){1,20}$/);
 							let valid = checkIfValid(mobile, postalcode, houseno, address);
@@ -125,11 +141,12 @@ const Order = () => {
 					<input
 						type='text'
 						id='addressField'
-						className='form-control lh-5'
+						className='form-control lh-5 is-valid'
 						ref={address}
 						placeholder='Address'
+						defaultValue={'Ward No. 1, Bhopal, MP, India.'}
 						onInput={(event) => {
-							validateInput(event, /^(.|\n){15,499}$/);
+							validateInput(event, /^(.|\n){10,499}$/);
 							let valid = checkIfValid(mobile, postalcode, houseno, address);
 							setPaymenState(valid);
 						}}
@@ -137,131 +154,9 @@ const Order = () => {
 					<div className='valid-feedback'>Looks good!</div>
 					<div className='invalid-feedback'>Address must have atleast 15 Character.</div>
 				</div>
-				<button id='submitbtn' type='submit'></button>
-				{paymentState ? (
-					user !== null && (
-						<GooglePayButton
-							environment='TEST'
-							paymentRequest={{
-								apiVersion: 2,
-								apiVersionMinor: 0,
-								allowedPaymentMethods: [
-									{
-										type: 'CARD',
-										parameters: {
-											allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-											allowedCardNetworks: ['MASTERCARD', 'VISA']
-										},
-										tokenizationSpecification: {
-											type: 'PAYMENT_GATEWAY',
-											parameters: {
-												gateway: 'example',
-												gatewayMerchantId: 'exampleGatewayMerchantId'
-											}
-										}
-									}
-								],
-								merchantInfo: {
-									merchantId: '12345678901234567890',
-									merchantName: 'Foodkart (Demo Payment)'
-								},
-								transactionInfo: {
-									totalPriceStatus: 'FINAL',
-									totalPriceLabel: 'Total',
-									totalPrice: `${subTotal ? subTotal + Math.ceil(subTotal * 0.18) : '0'}.00`,
-									currencyCode: 'INR',
-									countryCode: 'IN'
-								},
-								callbackIntents: ['PAYMENT_AUTHORIZATION'],
-								emailRequired: true
-							}}
-							onPaymentAuthorized={async () => {
-								return new Promise(function (resolve, reject) {
-									processPayment()
-										.then(function () {
-											resolve({ transactionState: 'SUCCESS' });
-											dispatch(deleteAllCartProduct(user?.email));
-											dispatch(
-												addOrder({
-													orderId: orderID,
-													user: user.email,
-													name: user.name,
-													amount: subTotal + Math.ceil(subTotal * 0.18),
-													mobile:mobile.current.value,
-													address: address.current.value,
-													postalcode:postalcode.current.value,
-													houseno:houseno.current.value
-												})
-											);
-											showToast('success', 'Thankyou for ordering from foodkart.');
-											toggleCart(user, navigate);
-											toggleOrderPage();
-										})
-										.catch(function () {
-											resolve({
-												transactionState: 'ERROR',
-												error: {
-													intent: 'PAYMENT_AUTHORIZATION',
-													message: 'Insufficient funds',
-													reason: 'PAYMENT_DATA_INVALID'
-												}
-											});
-										});
-								});
-							}}
-							onClick={() => {
-								document.getElementById('submitbtn').click();
-							}}
-							buttonColor='white'
-							buttonType='plain'
-							buttonSizeMode='fill'
-							className='gpayButtonSize'
-						/>
-					)
-				) : (
-					<GooglePayButton
-						environment='TEST'
-						paymentRequest={{
-							apiVersion: 2,
-							apiVersionMinor: 0,
-							allowedPaymentMethods: [
-								{
-									type: 'CARD',
-									parameters: {
-										allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-										allowedCardNetworks: ['MASTERCARD', 'VISA']
-									},
-									tokenizationSpecification: {
-										type: 'PAYMENT_GATEWAY',
-										parameters: {
-											gateway: 'example',
-											gatewayMerchantId: 'exampleGatewayMerchantId'
-										}
-									}
-								}
-							],
-							merchantInfo: {
-								merchantId: '12345678901234567890',
-								merchantName: 'Demo Merchant'
-							},
-							transactionInfo: {
-								totalPriceStatus: 'FINAL',
-								totalPriceLabel: 'Total',
-								totalPrice: '0',
-								currencyCode: 'USD',
-								countryCode: 'US'
-							}
-						}}
-						onClick={(event) => {
-							event.preventDefault();
-							document.getElementById('submitbtn').click();
-						}}
-						buttonColor='white'
-						buttonType='plain'
-						buttonSizeMode='fill'
-						className='gpayButtonSize'
-					/>
-				)}
+				<div className='d-flex'>
+					<button id='submitbtn' className='button px-4' disabled={!paymentState} type='submit'> Pay Now</button>
+				</div>
 			</form>
 		</div>
 	);
