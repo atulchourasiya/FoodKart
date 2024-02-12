@@ -18,7 +18,6 @@ export const addOrder = createAsyncThunk('order/addOrder', async (order, { dispa
 		});
 		if (response.status === 200) {
 			const res = await response.json();
-			console.log(res);
 			return res;
 		} else if (response.status === 401) {
 			showToast('warning', 'Your login session is expired login again to continue');
@@ -32,13 +31,7 @@ export const addOrder = createAsyncThunk('order/addOrder', async (order, { dispa
 
 const orderSlice = createSlice({
 	name: 'Order',
-	initialState,
-	reducers: {
-		setOrderState(state, action) {
-			state.order = action.payload;
-		},
-	}
+	initialState
 });
 
-export const { setOrderState } = orderSlice.actions;
 export default orderSlice.reducer;

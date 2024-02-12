@@ -1,0 +1,4 @@
+.payment-content p{
+   font-size: var(--fs-500);
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

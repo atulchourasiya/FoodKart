@@ -22,6 +22,8 @@ import Cart from './Component/Sidebar/Cart';
 import LoadingPage from './Component/LoadingPage/LoadingPage';
 import { useSelector } from 'react-redux';
 import Order from './Component/Order/Order';
+import PaymentVerify from './Component/Payment/PaymentVerify';
+
 function App() {
 	const { initialLoading } = useSelector((state) => state.initialLoadingState);
 	return (
@@ -102,6 +104,7 @@ function App() {
 								<Route path='/signup' element={<Signup />}></Route>
 								<Route path='/verification' element={<Verification />}></Route>
 								<Route path='/resetpassword' element={<ResetPassword />}></Route>
+								<Route path='/order/:orderId' element={<PaymentVerify />} exact ></Route>
 							</Routes>
 						</>
 					)}

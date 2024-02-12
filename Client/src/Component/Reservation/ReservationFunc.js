@@ -1,4 +1,4 @@
-import { addReservation, setReservationLoading } from '../../Redux/Slices/reservation';
+import { addReservation, setReservationLoading } from '../../Redux/Slices/reservationSlice';
 import { isUserNull } from '../Contact/ContactFunc';
 import { showToast } from '../Login/loginFunc';
 

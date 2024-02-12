@@ -6,7 +6,7 @@ import contactSlice from './Slices/contactSlice';
 import loadingSlice from './Slices/loadingSlice';
 import menuSlice from './Slices/menuSlice';
 import orderSlice from './Slices/orderSlice';
-import reservationSlice from './Slices/reservation';
+import reservationSlice from './Slices/reservationSlice';
 import serviceSlice from './Slices/serviceSlice';
 import testimonialSlice from './Slices/testimonialSlice';
 import userSlice from './Slices/userSlice';

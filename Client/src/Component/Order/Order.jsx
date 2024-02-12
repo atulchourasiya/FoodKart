@@ -1,13 +1,10 @@
 import './Order.css';
 import { useRef, useState } from 'react';
 import { validateInput } from '../Login/signUpFunc';
-import { openCloseOrderPage, toggleOrderPage ,  } from '../Sidebar/CartFunc';
+import { openCloseOrderPage, } from '../Sidebar/CartFunc';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkIfValid } from './OrderFunc';
 import { showToast } from '../Login/loginFunc';
-import { deleteAllCartProduct } from '../../Redux/Slices/cartSlice';
-import { addOrder, setOrderState } from '../../Redux/Slices/orderSlice';
-import { useNavigate } from 'react-router-dom';
 import { initializePayment } from '../../Redux/Slices/paymentSlice';
 
 const Order = () => {
@@ -16,7 +13,6 @@ const Order = () => {
 	const { subTotal } = useSelector((state) => state.cartState);
 	const { orderID } = useSelector((state) => state.cartState);
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 	const mobile = useRef();
 	const postalcode = useRef();
 	const houseno = useRef();
@@ -30,8 +26,7 @@ const Order = () => {
 				<button
 					type='button'
 					data-cartbutton
-					onClick={()=>{
-						toggleOrderPage();
+					onClick={() => {
 						openCloseOrderPage();
 					}}
 					className='btn-close me-2 position-absolute'
@@ -66,21 +61,16 @@ const Order = () => {
 						return;
 					}
 					else {
-						dispatch(
-							setOrderState({
-								orderId: orderID,
-								user: user.email,
-								name: user.name,
-								amount: subTotal + Math.ceil(subTotal * 0.18),
-								mobile: mobile.current.value,
-								address: address.current.value,
-								postalcode: postalcode.current.value,
-								houseno: houseno.current.value
-							})
-						);
 						dispatch(initializePayment({
-								amount: subTotal + Math.ceil(subTotal * 0.18)
-							}));
+							orderId: orderID,
+							user: user.email,
+							name: user.name,
+							amount: subTotal + Math.ceil(subTotal * 0.18),
+							mobile: mobile.current.value,
+							address: address.current.value,
+							postalcode: postalcode.current.value,
+							houseno: houseno.current.value
+						}));
 					}
 				}}>
 				<div className='col-md-6 inputOrderField'>
@@ -95,7 +85,7 @@ const Order = () => {
 							setPaymenState(valid);
 						}}
 						placeholder={'Mobile No.'}
-						defaultValue = {1234567890}
+						defaultValue={1234567890}
 						required
 					/>
 					<div className='valid-feedback'>Looks good!</div>
