@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const { auth } = require('../middleware/reqAuth');
 const Order = require('../model/Order');
 
-router.post('/initializepayment', auth, async (req, res) => {
+router.post('/initializepayment', async (req, res) => {
    try {
       const { amount } = req.body;
       const options = {

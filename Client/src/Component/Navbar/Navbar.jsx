@@ -12,8 +12,6 @@ import {
 } from './NavbarFunc';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../../firebase';
-import { setUser } from '../../Redux/Slices/authSlice';
 import tippy from 'tippy.js';
 import 'tippy.js/themes/light.css';
 import { fetchCartProduct } from '../../Redux/Slices/cartSlice';
@@ -40,18 +38,6 @@ function NavigationBar() {
 		}
 	}, [location.hash]);
 	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			if (user !== null && user.emailVerified) {
-				dispatch(
-					setUser({
-						name: user.displayName,
-						email: user.email,
-						userid: user.uid,
-						emailVerified: user.emailVerified
-					})
-				);
-			}
-		});
 		handleScroll();
 		document.addEventListener('scroll', highlightFunc);
 		return () => {
