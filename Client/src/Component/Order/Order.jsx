@@ -61,16 +61,21 @@ const Order = () => {
 						return;
 					}
 					else {
-						dispatch(initializePayment({
-							orderId: orderID,
-							user: user.email,
-							name: user.name,
-							amount: subTotal + Math.ceil(subTotal * 0.18),
-							mobile: mobile.current.value,
-							address: address.current.value,
-							postalcode: postalcode.current.value,
-							houseno: houseno.current.value
-						}));
+						dispatch(
+              initializePayment([
+                {
+                  orderId: orderID,
+                  user: user.email,
+                  name: user.name,
+                  amount: subTotal + Math.ceil(subTotal * 0.18),
+                  mobile: mobile.current.value,
+                  address: address.current.value,
+                  postalcode: postalcode.current.value,
+                  houseno: houseno.current.value,
+                },
+                {...user},
+              ])
+            );
 					}
 				}}>
 				<div className='col-md-6 inputOrderField'>
