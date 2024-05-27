@@ -1,8 +1,9 @@
 {
   "version": 2,
+  "name" : "Foodkart",
   "builds": [
     {
-      "src": "package.json",
+      "src": "server.js",
       "use": "@vercel/node"
     }
   ],
