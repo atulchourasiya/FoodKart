@@ -1,15 +1,10 @@
 {
   "version": 2,
-  "name" : "Foodkart",
+  "name": "Foodkart",
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "functions": {
-          "server.js": { "maxDuration": 60 }
-        }
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -17,5 +12,10 @@
       "src": "/(.*)",
       "dest": "/server.js"
     }
-  ]
+  ],
+  "functions": {
+    "/server.js": {
+      "maxDuration": 60
+    }
+  }
 }
